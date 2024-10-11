@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./components/auth/auth";
+import { RequireAuth } from "./components/auth/requireAuth";
+import { Login } from "./pages/Login";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
+import WeekList from "./pages/WeekList";
+import MyList from "./pages/MyList";
+import { Navbar } from "./components/Navbar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <AuthProvider>
+            <Navbar />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <RequireAuth>
+                    <Home />
+                  </RequireAuth>
+                }
+              />
+              <Route path="/login" element={<Login />} />
+
+              <Route
+                path="/weeklist"
+                element={
+                  <RequireAuth>
+                    <WeekList />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/mylist"
+                element={
+                  <RequireAuth>
+                    <MyList />
+                  </RequireAuth>
+                }
+              />
+
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
