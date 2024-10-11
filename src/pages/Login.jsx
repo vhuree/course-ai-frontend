@@ -97,6 +97,11 @@ export const Login = () => {
             <Button text="Login" loading={isLoading} disabled={isLoading} />
           </form>
           {error && <p className="error">{error}</p>}
+          <div className="input-field">
+            <div onClick={() => navigate("/register", { replace: true })}>
+              Dont have an account ? Click here to create
+            </div>
+          </div>
         </div>
       </div>
     </>
