@@ -172,3 +172,16 @@ nav a.active {
     transform: rotate(360deg);
   }
 }
+
+input:disabled {
+  background-color: #4d5256;
+  color: #9fa3a9;
+}
+
+.submit-button:disabled {
+  background-color: #4d5256;
+  color: #9fa3a9;
+  cursor: not-allowed;
+}
+
+/* end for spinner */
