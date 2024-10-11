@@ -1,7 +1,7 @@
 export default function MyList() {
   return (
     <>
-      <p> Ths is the new courses page</p>
+      <p> Ths is the my list of words saved</p>
     </>
   );
 }
